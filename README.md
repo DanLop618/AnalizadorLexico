@@ -29,7 +29,9 @@ Además de las utilidades principales del **Analizador Léxico**, esta librería
 ```ts
 // Adición al ejemplo anterior
 import { UtilidadesArbol } from "./source/util/UtilidadesArbol";
+const Arbol = UtilidadesArbol.DesdeTokens( Tokens );
 ```
+Además, una expresión algebráica que ya ha sido generada en un **Árbol de Expresiones** y cuyos valores son todos numéricos ( no identificadores ) puede ser validada y obtener el resultado.
 ```ts
 import { Escaner } from "./source/class/Escaner";
 import { UtilidadesArbol } from "./source/util/UtilidadesArbol";
