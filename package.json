@@ -1,0 +1,11 @@
+{
+  "name": "analizador_mas_arbol",
+  "version": "1.0.2",
+  "description": "Analizador léxico basado en el lenguaje C",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "danlop__",
+  "license": "ISC"
+}
