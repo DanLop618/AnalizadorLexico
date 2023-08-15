@@ -76,6 +76,10 @@ export class Escaner {
     return new RegExp( Expresion, 'gm');
   }
 
+  /**
+   * @brief Obtiene la expresión regular resultante de los @c Token delimitadores en forma de cadena
+   * @returns { string }
+   */
   private ObtenerRegExpDelimitadores(): string {
     const MapaDelimitadores = Delimitadores.map(( Operador ) => {
       return this.NormalizarExpresion( Operador.Valor );
@@ -83,6 +87,10 @@ export class Escaner {
     return MapaDelimitadores.join( '|' );
   }
 
+  /**
+   * @brief Obtiene la expresión regular resultante de los @c Token comentarios en forma de cadena
+   * @returns { string }
+   */
   private ObtenerRegExpComentarios(): string {
     const MapaComentarios = Comentarios.map(( Elemento ) => {
       return this.NormalizarExpresion( Elemento.Valor );
@@ -90,6 +98,10 @@ export class Escaner {
     return MapaComentarios.join( '|' );
   }
 
+  /**
+   * @brief Obtiene la expresión regular resultante de los @c Token palabras reservadas en forma de cadena
+   * @returns { string }
+   */
   private ObtenerRegExpPalabrasReservadas(): string {
     const MapaPalabrasReservadas = PalabrasReservadas.map(( Elemento ) => {
       return Elemento.Valor;
@@ -97,6 +109,10 @@ export class Escaner {
     return MapaPalabrasReservadas.join( '|' );
   }
 
+  /**
+   * @brief Obtiene la expresión regular resultante de los @c Token operadores en forma de cadena
+   * @returns { string }
+   */
   private ObtenerRegExpOperadores(): string {
     const MapaOperadores = Operadores.map(( Elemento ) => {
       return this.NormalizarExpresion( Elemento.Valor );
@@ -104,6 +120,10 @@ export class Escaner {
     return MapaOperadores.join( '|' );
   }
 
+  /**
+   * @brief Obtiene la expresión regular resultante de los @c Token símbols especiales en forma de cadena
+   * @returns { string }
+   */
   private ObtenerRegExpSimbolosEspeciales(): string {
     const MapaSimbolosEspeciales = SimbolosEspeciales.map(( Elemento ) => {
       return this.NormalizarExpresion( Elemento.Valor );
@@ -111,7 +131,11 @@ export class Escaner {
     return MapaSimbolosEspeciales.join( '|' );
   }
 
-  private NormalizarExpresion( Valor: string ) {
+  /**
+   * @brief Normaliza una expresión que contiene caracteres especiales para su uso en expresiones regulares
+   * @returns { string }
+   */
+  private NormalizarExpresion( Valor: string ): string {
     let OperadorNormalizado: string = "";
     for ( const Caracter of Valor ) {
       OperadorNormalizado += `\\${ Caracter }`;
@@ -119,6 +143,10 @@ export class Escaner {
     return OperadorNormalizado;
   }
 
+  /**
+   * @brief Obtiene los @c Token código de error que hayan resultado del análisis
+   * @returns { Array<Token> }
+   */
   private ObtenerCodigosError(): Array<Token> {
     const Tokens: Array<Token> = [];
     let MensajeError: string = "";
@@ -151,7 +179,11 @@ export class Escaner {
     return Tokens;
   }
 
-  private AtualizarEstado( Coincidencia: string ) {
+  /**
+   * @brief Analiza una coincidencia de símbolo y actualiza el estado de este @c Escaner
+   * @param { string } Coincidencia La coincidencia a analizar
+   */
+  private AtualizarEstado( Coincidencia: string ): void {
     let Index: number;
     switch ( Coincidencia ) {
       case '(':
@@ -211,7 +243,12 @@ export class Escaner {
     }
   }
 
-  private ObtenerToken( Coincidencia: string ) {
+  /**
+   * @brief Obtiene un @c Token a partir de una coincidencia
+   * @param { string } Coincidencia La coincidencia a buscar
+   * @returns { Token }
+   */
+  private ObtenerToken( Coincidencia: string ): Token {
     this.AtualizarEstado( Coincidencia );
     const DatosTokens: Array<TokenBase> = [ ...PalabrasReservadas, ...Delimitadores, ...Comentarios, ...Operadores, ...SimbolosEspeciales ];
     let Expresion: RegExp = new RegExp( `^${ this.NormalizarExpresion( Coincidencia ) }$` );
